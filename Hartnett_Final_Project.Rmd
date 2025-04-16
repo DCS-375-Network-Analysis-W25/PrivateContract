@@ -45,7 +45,7 @@ lapply(need_load, require, character.only = TRUE)
 ```
 ## Import the Private Security Database
 ```{r}
-PSD <- read.csv("~/Hartnett375_FinalProject/PSD_V4_1990-2007_csv.csv", row.names=NULL, sep=";")
+PSD <- read.csv("PSD_V4_1990-2007_csv.csv", row.names=NULL, sep=";")
 
 View(PSD)
 head(PSD)
@@ -55,10 +55,10 @@ summarize(PSD)
 # Preprocess the data
 (To be converted into a matrix and graph object)
 ```{r}
-prepped_data <- PSD %>%
+prepped_test <- PSD %>%
   group_by(clientsc) %>%
   summarize(
-    target_country = locsc
+    contract_no = sum(nofirm)
   )
 #View(prepped_data)
 
@@ -131,12 +131,12 @@ PSD.g #and where it is going
 
 # Assign Node and Edge attributes
 ```{r}
-#V(PSD.g)$vertex_degree <- degree(PSD.g) #Assign a degree attribute
-set_vertex_attr(
-  PSD.g,
-  name = "degree",
-  value = degree(PSD.g)
-)
+V(PSD.g)$vertex_degree <- degree(PSD.g) #Assign a degree attribute
+#set_vertex_attr(
+#  PSD.g,
+#  name = "degree",
+#  value = degree(PSD.g)
+#)
 edge_weights <- E(PSD.g)$edge_weight <- PSD$nofirm #Make edgeweights the number of firms employed
 edge_colors <- E(PSD.g)$edge_color <- PSD$task #Make edges different colors based on the type of contracting
 #Preliminary Visualization
@@ -145,8 +145,8 @@ lo_nice = layout_nicely(PSD.g)#layout_nicely automatically selects the best layo
 png(file="PrivateSecurityNetwork.png", width=10000, height=10000, res = 400)#Save the visualization as a png
 plot(PSD.g, layout = lo_nice, vertex.size = log(V(PSD.g)$vertex_degree) * 2, edge.width = edge_weights, edge.arrow.size = 0.9,
      vertex.label.color = "black") +
-  title("Private Military Contracts by Country", cex.main = 4) +
-  palette.colors(palette = "RdPu")#cex.main = size of title
+  title("Private Military Contracts by Country", cex.main = 4)
+  #+ palette.colors(palette = "RdPu")#cex.main = size of title
 dev.off()#Necessary when saving the visualization as a png
 ```
 
