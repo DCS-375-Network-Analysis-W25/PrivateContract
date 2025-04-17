@@ -1,8 +1,6 @@
 <h1 align="center">Network Analysis of Private Contracting in Failed States</h1>
 
 #### Harrison Hartnett 
-#### Professor Carrie Diaz Eaton  
-#### DCS375 Network Analysis  
 #### April 17th, 2025
 
 ## Background
