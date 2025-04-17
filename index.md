@@ -20,7 +20,7 @@ Using igraph and bipartite R packages to visualize and analyze the network of pr
 This analysis uses publically available software and data for maximum reproducablility. All scholarly sources are referenced and all online resources have appropriate links. None of the data used contains any information that could be traceable to specific individuals.
 
 ## Visualizations & Analysis
-![Error: Image Not Found](img/PrivateSecurityNetwork.png)
+![Error: Image Not Found]([img/PrivateSecurityNetwork.png](https://github.com/DCS-375-Network-Analysis-W25/PrivateContract/blob/main/PrivateSecurityNetwork.png))
 ## References
 Crowe, Jonathan, and Anna John. 2017. “The Status of Private Military Security Companies in United Nations Peacekeeping Operations under the International Law of Armed Conflict.” Melbourne Journal of International Law 18(1): 16–44. doi:10.3316/informit.980092731941255.
 
