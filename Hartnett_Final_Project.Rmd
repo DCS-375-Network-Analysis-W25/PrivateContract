@@ -55,12 +55,12 @@ summarize(PSD)
 # Preprocess the data
 (To be converted into a matrix and graph object)
 ```{r}
-prepped_test <- PSD %>%
-  group_by(clientsc) %>%
+prepped_data <- PSD %>%
+  group_by(clientsc, locsc) %>%
   summarize(
     contract_no = sum(nofirm)
   )
-#View(prepped_data)
+View(prepped_data)
 
 #Change country codes to actual names
 for (i in prepped_data) {
@@ -89,33 +89,33 @@ for (i in prepped_data) {
   prepped_data$clientsc <- str_replace_all(prepped_data$clientsc, "UN", "United Nations")
   prepped_data$clientsc <- str_replace_all(prepped_data$clientsc, "USA", "United States")
   prepped_data$clientsc <- str_replace_all(prepped_data$clientsc, "WB", "West Bank")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "ANG", "Angola")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "IRQ", "Iraq")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "COL", "Columbia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "AZE", "Azerbaijan")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "BOS", "Bosnia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "AFG", "Afghanistan")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "CON", "Congo")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "CRO", "Croatia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "DRC", "Democratic Republic of Congo")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "ETH", "Ethiopia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "LBR", "Liberia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "MZM", "Mozambique")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "PHI", "Philipines")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "RWA", "Rwanda")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "BUI", "Burundi")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "SIE", "Sierra Leone")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "UGA", "Uganda")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "YUG", "Yugoslavia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "SUD", "Sudan")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "NEP", "Nepal")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "SOM", "Somalia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "IVO", "Ivory Coast")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "GRG", "Georgia")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "NIG", "Nigeria")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "ALB", "Albania")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "GUA", "Guatemala")
-  prepped_data$target_country <- str_replace_all(prepped_data$target_country, "PER", "Peru")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "ANG", "Angola")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "IRQ", "Iraq")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "COL", "Columbia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "AZE", "Azerbaijan")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "BOS", "Bosnia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "AFG", "Afghanistan")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "CON", "Congo")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "CRO", "Croatia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "DRC", "Democratic Republic of Congo")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "ETH", "Ethiopia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "LBR", "Liberia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "MZM", "Mozambique")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "PHI", "Philipines")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "RWA", "Rwanda")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "BUI", "Burundi")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "SIE", "Sierra Leone")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "UGA", "Uganda")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "YUG", "Yugoslavia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "SUD", "Sudan")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "NEP", "Nepal")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "SOM", "Somalia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "IVO", "Ivory Coast")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "GRG", "Georgia")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "NIG", "Nigeria")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "ALB", "Albania")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "GUA", "Guatemala")
+  prepped_data$locsc <- str_replace_all(prepped_data$locsc, "PER", "Peru")
 }
 View(prepped_data)
 ```
@@ -125,20 +125,17 @@ View(prepped_data)
 PSD_matrix <- as.matrix(prepped_data)
 #View(PSD_matrix)
 
-PSD.g <- graph_from_edgelist(PSD_matrix, directed = TRUE) #Directed because I want to know which country a contract is coming from
+PSD.g <- graph_from_data_frame(PSD_matrix, directed = TRUE) #Directed because I want to know which country a contract is coming from
 PSD.g #and where it is going
 ```
 
 # Assign Node and Edge attributes
 ```{r}
-V(PSD.g)$vertex_degree <- degree(PSD.g) #Assign a degree attribute
-#set_vertex_attr(
-#  PSD.g,
-#  name = "degree",
-#  value = degree(PSD.g)
-#)
-edge_weights <- E(PSD.g)$edge_weight <- PSD$nofirm #Make edgeweights the number of firms employed
-edge_colors <- E(PSD.g)$edge_color <- PSD$task #Make edges different colors based on the type of contracting
+V(PSD.g)$vertex_degree <- igraph::degree(PSD.g) #Assign a degree attribute
+
+edge_weights <- E(PSD.g)$edge_weight <- prepped_data$contract_no #Make edgeweights the number of firms employed
+#edge_colors <- E(PSD.g)$edge_color <- PSD$task #Make edges different colors based on the type of contracting
+
 #Preliminary Visualization
 set.seed(375)#For reproduceability
 lo_nice = layout_nicely(PSD.g)#layout_nicely automatically selects the best layout
