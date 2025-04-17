@@ -15,7 +15,7 @@ We are going to start by identifying any packages needed for our analysis. In or
 knitr::opts_chunk$set(echo = TRUE)
 
 # Store string containing all required packages
-my_packages <- c('igraph', 'RColorBrewer', 'ggplot2', 'dplyr', 'janitor', 'stringr', 'stopwords')
+my_packages <- c('igraph', 'RColorBrewer', 'ggplot2', 'dplyr', 'janitor', 'stringr', 'stopwords', 'bipartite')
 
 ```
 
@@ -56,9 +56,9 @@ summarize(PSD)
 (To be converted into a matrix and graph object)
 ```{r}
 prepped_data <- PSD %>%
-  group_by(clientsc, locsc) %>%
+  group_by(clientsc, locsc) %>%#I want to know which countries are sending PMSCs where
   summarize(
-    contract_no = sum(nofirm)
+    contract_no = sum(nofirm)#Summarize the number of PMSCs deployed to a specific country
   )
 View(prepped_data)
 
@@ -123,7 +123,8 @@ View(prepped_data)
 # Create a graph object that we can visualize
 ```{r}
 PSD_matrix <- as.matrix(prepped_data)
-#View(PSD_matrix)
+#PSD_el <- as.edgelist(prepped_data)
+View(PSD_matrix)
 
 PSD.g <- graph_from_data_frame(PSD_matrix, directed = TRUE) #Directed because I want to know which country a contract is coming from
 PSD.g #and where it is going
@@ -134,14 +135,13 @@ PSD.g #and where it is going
 V(PSD.g)$vertex_degree <- igraph::degree(PSD.g) #Assign a degree attribute
 
 edge_weights <- E(PSD.g)$edge_weight <- prepped_data$contract_no #Make edgeweights the number of firms employed
-#edge_colors <- E(PSD.g)$edge_color <- PSD$task #Make edges different colors based on the type of contracting
 
 #Preliminary Visualization
 set.seed(375)#For reproduceability
 lo_nice = layout_nicely(PSD.g)#layout_nicely automatically selects the best layout
-png(file="PrivateSecurityNetwork.png", width=10000, height=10000, res = 400)#Save the visualization as a png
-plot(PSD.g, layout = lo_nice, vertex.size = log(V(PSD.g)$vertex_degree) * 2, edge.width = edge_weights, edge.arrow.size = 0.9,
-     vertex.label.color = "black") +
+png(file="PrivateSecurityNetwork.png", width=12000, height=10000, res = 400)#Save the visualization as a png
+plot(PSD.g, layout = lo_nice, vertex.size = log(V(PSD.g)$vertex_degree) * 5, edge.width = (log(edge_weights) + 1) * 4, edge.arrow.size = 0.9,
+     vertex.label.color = "black", vertex.label.cex = 3) +
   title("Private Military Contracts by Country", cex.main = 4)
   #+ palette.colors(palette = "RdPu")#cex.main = size of title
 dev.off()#Necessary when saving the visualization as a png
@@ -160,5 +160,107 @@ print("Diameter:")
 diameter(PSD.g)
 print("Transitivity:")
 transitivity(PSD.g)
-
 ```
+
+# Creating a Bipartite Graph
+```{r}
+#Build an edgelist
+prepped_data2 <- PSD %>%
+  group_by(clientsc) %>%
+  summarize(
+    locsc = locsc
+  )
+for (i in prepped_data) {
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "ANG", "Angola")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "AUL", "Australia")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "AZE", "Azerbaijan")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "BOS", "Bosnia")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "CAN", "Canada")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "COL", "Columbia")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "CON", "Congo")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "CPA", "Commonwealth Parlimentary Association")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "CRO", "Croatia")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "DRC", "Democratic Republic of Congo")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "ETH", "Ethiopia")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "IRQ", "Iraq")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "ITA", "Italy")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "LBR", "Liberia")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "MZM", "Mozambique")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "PHI", "Philipines")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "RWA", "Rwanda")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "SAF", "South Africa")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "SIE", "Sierra Leone")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "UGA", "Uganda")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "UK", "United Kingdom")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "UKG", "United Kingdom")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "UN", "United Nations")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "USA", "United States")
+  prepped_data2$clientsc <- str_replace_all(prepped_data2$clientsc, "WB", "West Bank")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "ANG", "Angola")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "IRQ", "Iraq")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "COL", "Columbia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "AZE", "Azerbaijan")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "BOS", "Bosnia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "AFG", "Afghanistan")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "CON", "Congo")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "CRO", "Croatia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "DRC", "Democratic Republic of Congo")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "ETH", "Ethiopia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "LBR", "Liberia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "MZM", "Mozambique")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "PHI", "Philipines")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "RWA", "Rwanda")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "BUI", "Burundi")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "SIE", "Sierra Leone")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "UGA", "Uganda")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "YUG", "Yugoslavia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "SUD", "Sudan")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "NEP", "Nepal")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "SOM", "Somalia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "IVO", "Ivory Coast")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "GRG", "Georgia")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "NIG", "Nigeria")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "ALB", "Albania")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "GUA", "Guatemala")
+  prepped_data2$locsc <- str_replace_all(prepped_data2$locsc, "PER", "Peru")
+}
+#View(prepped_data2)
+
+#prepped_data2.g <- graph_from_biadjacency_matrix(prepped_data2, weighted = TRUE)
+#edge.prepped_data2 <- as_edgelist(prepped_data2.g)
+
+webID <- data.frame(matrix("privatecontract", nrow = nrow(prepped_data2), ncol = 1))
+new_obj <- cbind(prepped_data2, webID)
+colnames(new_obj)<- c("clientsc", "locsc", "WebID")
+View(new_obj)
+```
+
+# Creating a bipartite network object
+To analyze the degree distribution and node specific summary statistics
+```{r}
+new_obj_df <- as.data.frame(new_obj)
+private_vis1 <- frame2webs(new_obj_df, varnames = c("clientsc", "locsc", "WebID"),
+                           type.out = "list", emptylist = TRUE)#Output type = list
+
+#Finding the degree distribution
+degreedistr(private_vis1$'privatecontract', plot.it=TRUE, pure.call=TRUE, silent=TRUE, level="both")
+```
+
+# Summaries
+```{r}
+#Network Level Summary
+networklevel <- networklevel(private_vis1$'privatecontract')
+
+#Node Level Summaries
+node_summary <- specieslevel(private_vis1$'privatecontract') #Specieslevel can calculate summary statistics for individual nodes
+
+#Specific stasitics: I chose the Unites States
+node_summary$'higher level'['United States',] #Summarize stats for the U.S node
+node_summary$'lower level'['United Nations',] #Summarize stats for the U.N node
+
+networklevel
+node_summary
+```
+It makes sense that there isn't a great fit for the givers
+The truncated power law means you have few countries are contributing a lot - and you have many countries who do very little
+Linked for interpretation of these results
