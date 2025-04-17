@@ -10,7 +10,7 @@ As a politics major in my final year of undergrad, I wanted to write my thesis a
 
 During my research, I realized that something was missing from the existing literature: a  clear accounting of which states tended to engage in private contracting, and where they chose to employ PMSCs. At the same time, I came across a dataset that could be extremely useful for this purpose; the Private Security Database (PSD). This is a database that tracks the deployment of private contractors in collapsing or failed states. It was created as part of a research project "Privatization and Commercialization of Security", which is part of the Collaborative Research Center “Governance in Areas of Limited Statehood” in Berlin (link?). Although this is not a comprehensive list of all the private military contracting that occured in those years, this analysis is an important step in understanding the scope of PMSC use by states.
 
-The following project is a network analysis of data from the private security database (PSD), focusing on one main question:
+The following project is a network analysis of data from the private security database (PSD), focusing on two main questions:
 - What insights can be gained about the general structure of the network of private contracting?
 - Which countries or institutions tend to employ PMSCs the most?
 
