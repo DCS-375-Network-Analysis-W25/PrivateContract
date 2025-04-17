@@ -21,8 +21,7 @@ This analysis uses publically available software and data for maximum reproducab
 
 ## Visualizations & Analysis
 ![Error: Image Not Found](PrivateSecurityNetwork.png)
-Nodes in this network represent countries. The size of the nodes corresponds to the degree, meaning that the most interconnected nodes will appear the largest (Note that the log of the vertex degree is actually used, because the difference between the largest and smallest nodes would be too great to visualize effectively otherwise).
-Edges represent instances of private contracting, with their direction showing which state was the employer of the PMSCs and which state the PMSCs were sent to. The thickness of the edges corresponds to the number of PMSCs engaged in that specific instance of contracting.
+Nodes in this network represent countries. The size of the nodes corresponds to the degree, meaning that the most interconnected nodes will appear the largest (Note that the log of the vertex degree is actually used, because the difference between the largest and smallest nodes would be too great to visualize effectively otherwise). Edges represent instances of private contracting, with their direction showing which state was the employer of the PMSCs and which state the PMSCs were sent to. The thickness of the edges corresponds to the number of PMSCs engaged in that specific instance of contracting. Self referrential loops show when a state deployed PMSCs within its own borders.
 ## References
 Crowe, Jonathan, and Anna John. 2017. “The Status of Private Military Security Companies in United Nations Peacekeeping Operations under the International Law of Armed Conflict.” Melbourne Journal of International Law 18(1): 16–44. doi:10.3316/informit.980092731941255.
 
