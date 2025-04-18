@@ -30,13 +30,7 @@ This figure was generated using the igraph package. Nodes in this network repres
   This figure was generated using the biparite package's plotweb function. The width of the boxes corresponds to the degree of the nodes, just like the private security network visualization. The width of the lines connecting countries also means the same thing, however this visualization makes it more apparent that the United States tends to employ more PMSCs to a given country at the same time, whereas the United Nations tends to contract only one or a few PMSCs to a given country.
 
 ## Data Cleaning & Methods
-  The dataset as it was originally downloaded contained many columns that this analysis wasn't particularly interested in, so the first important step was to group the data by the main factors I wanted to look at; Which countries were sending PMSCs (clientsc), and where they were being sent to (locsc). The code can be seen below.
-  
-prepped_data <- PSD %>%
-  group_by(clientsc, locsc) %>%#I want to know which countries are sending PMSCs where
-  summarize(
-    contract_no = sum(nofirm)#Summarize the number of PMSCs deployed to a specific country
-  )
+  The dataset as it was originally downloaded contained many columns that this analysis wasn't particularly interested in, so the first important step was to group the data by the main factors I wanted to look at; Which countries were sending PMSCs (clientsc), and where they were being sent to (locsc).
   
 Additionally, the names of the countries were abbreviated in the original dataset i.e Columbia = COL, so I created a for loop to str_replace_all each of the country abbreviations with the full names. 
 
@@ -50,6 +44,17 @@ The initial visualization was quite messy because the difference between the hig
   This analysis reveals a lot about the trends of private military contracting between 1990 and 2007. The most obvious conclusion is that the United States, as the major world superpower, deployed more PMSCs to foreign territories than any other country or international organization. The node level summary revealed that the U.S sent PMSCs to 18 different countries during that time The United Nations, as the main international peacekeeping body that isn't a state, also deployed PMSCs to 11 different countries. Iraq and Afghanistan have degrees of 7 and 5 respectively, meaning that during the window of time the dataset covers, foreign PMSCs were sent into Iraq and 5 were sent into Afghanistan.
 
   Another interesting insight is that there was a lot more contracting within specific states (meaing a country such as Angola hiring PMSCs to operate within its own borders) than I initially expected. This may be related to the discussion of my thesis the general trend across the world towards outsourcing military functions to private industry. In Africa in particular, it is well documented that many governments became dependent on Cold War era military support from the great powers (the U.S.S.R and the U.S), and that as that support waned after the fall of the Soviet Union, private contractors stepped in to fill the gap left behind  (Lock 1998 p.21; y Vines 2005, 2013; Mills and Stremlau 1999).
+
+Chapter 2 of A User’s Guide to Network Analysis in R describes the 5 number summary, which provides some useful general statistics:
+
+1. vcount(PSD.g) shows the total size of the network. The PSD dataset comprises 37 countries.
+2. edge_density(PSD.g) shows the overall connectivity of the network. With a value of 0.039, the network isn't particularly sparse or dense. This makes sense because while there are some highly connected nodes there are also many isolated nodes.
+3. components(PSD.g) simply lists the nodes of the network.
+4. diameter(PSD.g) shows the longest shortest path between any two nodes in the network. This network has a transitivity of one, which makes sense because it is a directed network, and typically countries which are deploying PMSCs are not simultaneously recieving deployments of PMSCs from other countries.
+5. transitivity(PSD.g) measures how often adjacent nodes in the network are also connected to each other, indicating the presence of communities or tightly connected groups. The transitivity of this network is 0, which indicates that there are not major clusters or subgroups. Perhaps an analysis which involved all the countries on earth would have clusters of different regions or kinds of governments. Further research is required.
+
+##Conclusion
+I was able to gain valuable insights about the structure of the network of private contracting in collapsing or failed states between 1990 and 2007. Most of the private military contracting that occured in this time period was driven by a few major international players such as the United States and the United Nations. The largest targets of PMSC deployment were Iraq and Afghanistan, almost certainly related to the U.S war on terror.
 
 ## References
 (All analysis in this project should be reproducable using only files from this github repo)
