@@ -6,4 +6,4 @@ Hartnett_Final_Project.Rmd is the main R file for conducting the network analysi
 PSD_V4_1990-2007_csv.csv is the main data file from the Private Security Database (For download see https://www.conflict-data.org/psd/Data_Download/index.html)
 index.md Contains the main project and references
 
-X License was chosen because...
+I chose the MIT license because I wanted this project to be something that encourages and supports future research, so I fully encourage the use and/or modification of this code
