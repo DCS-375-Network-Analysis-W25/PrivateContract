@@ -44,7 +44,7 @@ This figure was generated using the bipartite package's degreedistr function.
 degreedistr(private_vis1$'privatecontract', plot.it=TRUE, pure.call=TRUE, silent=TRUE, level="both")
 ```
   
-The lower level represents countries where PMSCs are operating/being sent, and the higher level represents the countries which are employing PMSCs. The degree distribution of the higher level follows the truncated-power law, which means that a relatively small proportion of the total countries are engaging in most of the private military contracting. This fits with what we would expect to see intuitively, that major states like the U.S are sending private military contractors all over the world, whereas smaller countries are engeging in much more limited contracting, perhaps only within their own borders such as Ethiopia or the Congo.
+The lower level represents countries where PMSCs are operating/being sent, and the higher level represents the countries which are employing PMSCs. The degree distribution of the higher level follows the truncated-power law, which means that a relatively small proportion of the total countries are engaging in most of the private military contracting. This fits with what we would expect to see intuitively, that major states like the U.S are sending private military contractors all over the world, whereas smaller countries are engeging in much more limited contracting, perhaps only within their own borders such as Ethiopia or the Congo. The lack of a clear fit for the lower level is likely due to a lack of enough data points. Perhaps if we had a much larger dataset we could observe something different.
 
 ![Error: Image Not Found](PrivateWeb.png)
 This figure was generated using the biparite package's plotweb function. 
